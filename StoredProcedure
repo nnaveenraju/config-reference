@@ -1,0 +1,17 @@
+
+Calling a stored procedure with input and output parameters:
+
+  <db:stored-procedure config-ref="c3p0_biskgp_gptransfer_connection" doc:name="Database-get-payment-status-gptransfer">
+      <db:parameterized-query><![CDATA[{ call usp_GetBalanceForCustomerAndCourse (:GreatPlainsInvoiceID, :CourseNumber,
+            :CustomerNumber,:IsInstructorLed, :SessionStartDate, :CustomerBalance, :CourseCount, :Error ) }]]></db:parameterized-query>
+      <db:in-param name="GreatPlainsInvoiceID" type="VARCHAR" value="#[payload['gp_invoice_num']]"/>
+      <db:in-param name="CourseNumber" type="VARCHAR" value="#[payload.course_code]"/>
+      <db:in-param name="CustomerNumber" type="VARCHAR" value="#[flowVars['studentGPId']]"/>
+      <db:in-param name="IsInstructorLed" type="INTEGER" value="#[payload.course_type_id]"/>
+      <db:in-param name="SessionStartDate" type="DATE" value="#[flowVars['classStartDate']]"/>
+      <db:out-param name="CustomerBalance" type="FLOAT"/>
+      <db:out-param name="CourseCount" type="INTEGER"/>
+      <db:out-param name="Error" type="VARCHAR"/>
+
+  </db:stored-procedure>
+        
